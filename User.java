@@ -13,21 +13,25 @@ public class User {
 	private Server server;
 	private Room room;
 	private Socket socket;
+	private final String password = "yeet";
 	private HashMap<String, Command> commands = new HashMap<String, Command>();
 
 	protected User(Socket socket, Room room, Server server) {
 		this.socket = socket;
-		this.server = server;
-		this.room = room;
-		counter++;
-		nickname = "User " + counter;
 		try {
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			while(!in.readLine().equals(password))//Log-in
+				write("§WRONG§");
+			write("§SUCCESS§");
 			InitiateCommandList();
 		} catch (IOException e) {
 			write("Socket exception");
 		}
+		this.server = server;
+		this.room = room;
+		counter++;
+		nickname = "User " + counter;
 		listRooms();
 	}
 

@@ -19,6 +19,7 @@ public class Client {
 			socket = new Socket("127.0.0.1", 7);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			login();
 		} catch (UnknownHostException e) {
 			System.out.println("Host not found");
 		} catch (IOException e) {
@@ -31,7 +32,7 @@ public class Client {
 			String line = stdIn.readLine();
 			out.println(line);
 			out.flush();
-		} catch (IOException e) {
+		} catch (IOException logout) {
 			System.out.println("You ded");
 			return false;
 		}
@@ -54,7 +55,14 @@ public class Client {
 
 		return true;
 	}
-
+	private void login() throws IOException {
+		System.out.println("Enter password:");
+		out.println(stdIn.readLine());
+		while(in.readLine().equals("§WRONG§")) {
+			System.out.println("Wrong password. Please try again.");
+			out.println(stdIn.readLine());
+		}
+	}
 	private void logout() {
 		try {
 			stdIn.close();
