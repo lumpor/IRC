@@ -13,7 +13,7 @@ public class User {
 	private Server server;
 	private Room room;
 	private Socket socket;
-	private final String password = "yeet";
+	private static final String password = "yeet";
 	private HashMap<String, Command> commands = new HashMap<String, Command>();
 
 	protected User(Socket socket, Room room, Server server) {
